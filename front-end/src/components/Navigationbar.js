@@ -7,10 +7,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useNavigate } from 'react-router-dom';
 
 function NavScrollExample() {
+
+  const navigate = useNavigate();
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#" style={{'font-weight': 'bold'}}>Automotive Ethernet</Navbar.Brand>
+        <Navbar.Brand href="#" style={{'font-weight': 'bold'}} onClick={() => navigate('/')}>Automotive Ethernet</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -39,8 +42,8 @@ function NavScrollExample() {
           </Nav>
 
           <ButtonGroup className="mb-2" >
-            <Button >Prihlásenie</Button>
-            <Button>Registrácia</Button>
+            <Button onClick={() => navigate('/login')}>Prihlásenie</Button>
+            <Button onClick={() => navigate('/register')}>Registrácia</Button>
           </ButtonGroup>
          
         </Navbar.Collapse>

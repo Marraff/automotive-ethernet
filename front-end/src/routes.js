@@ -11,6 +11,11 @@ const Loadable = Component => props =>
 const GuestGuard = Loadable(lazy(() => import('./components/guards/GuestGuard')));
 const Login = Loadable(lazy(() => import('./pages/authentification/Login')));
 const Register = Loadable(lazy(() => import('./pages/authentification/Register')));
+const NotFound = Loadable(lazy(() => import('./components/NotFound')));
+const AuthGuard = Loadable(lazy(() => import('./components/guards/AuthGuard')));
+
+const DashBoard = Loadable(lazy(() => import('./pages/dashboard/DashBoard')));
+const DashboardLayout = Loadable(lazy(() => import('./components/DashboardLayout')));
 
 const routes = [
 	{
@@ -31,6 +36,14 @@ const routes = [
 		element: (
 			<GuestGuard>
 				<Register />
+			</GuestGuard>
+		)
+	},
+	{
+		path: '',
+		element: (
+			<GuestGuard>
+				<DashBoard />
 			</GuestGuard>
 		)
 	}

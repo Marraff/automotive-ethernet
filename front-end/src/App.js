@@ -1,3 +1,31 @@
+import NotFound from './components/NotFound';
+import { useRoutes } from 'react-router-dom';
+import routes from './routes';
+import useAuth from './hooks/useAuth';
+import { experimentalStyled } from '@mui/material/styles';
+import React from 'react';
+
+const AppContainer = experimentalStyled('div')(() => ({
+	position: 'absolute',
+	top: 0,
+	backgroundSize: 'cover',
+	backgroundPosition: 'center',
+	backgroundRepeat: 'repeat',
+	width: '100%',
+	height: '100%',
+	overflowY: 'auto',
+}));
+
+const App = () => {
+	const content = useRoutes(routes);
+	const auth = useAuth();
+
+	return <AppContainer>{auth.isInitialized ? content : <NotFound />}</AppContainer>;
+};
+
+export default App;
+
+/*
 import logo from './logo.svg';
 import './App.css';
 import Badge from 'react-bootstrap/Badge';
@@ -29,3 +57,4 @@ function App() {
 }
 
 export default App;
+*/

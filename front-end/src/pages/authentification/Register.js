@@ -18,8 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import useAuth from '../../hooks/useAuth';
-import { useTranslation } from 'react-i18next';
-import Navbar from '../../components/AppBar';
+import Navbar from '../../components/Navigationbar';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -35,8 +34,6 @@ const Register = () => {
 		setOpen(true);
 	};
 
-	const { t } = useTranslation();
-
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
@@ -45,12 +42,10 @@ const Register = () => {
 	};
 
 	const validationSchema = Yup.object({
-		email: Yup.string().email(t('incorrectFormat')).required(t('requiredField')),
-		password: Yup.string().min(6, t('incorrectPassord')).required(t('requiredField')),
-		role: Yup.string().required(t('requiredField')),
-		aisId: Yup.number().required(t('requiredField')),
-		name: Yup.string().required(t('requiredField')),
-		surname: Yup.string().required(t('requiredField'))
+		email: Yup.string().email("nesprávny formát").required("povinné pole"),
+		password: Yup.string().min(6, "nesprávne heslo").required("povinné pole"),
+		name: Yup.string().required("povinné pole"),
+		surname: Yup.string().required("povinné pole")
 	});
 
 	const onSubmit = async (values, { resetForm }) => {
@@ -61,7 +56,7 @@ const Register = () => {
 			resetForm();
 			navigate('/login', { state: { registered: true } });
 		} catch (error) {
-			setStatus(`${t('error')} ${error.message}`);
+			setStatus(`${"error"} ${error.message}`);
 			handleClick();
 		}
 	};
@@ -70,8 +65,6 @@ const Register = () => {
 		initialValues: {
 			email: '',
 			password: '',
-			role: '',
-			aisId: '',
 			name: '',
 			surname: ''
 		},
@@ -105,7 +98,7 @@ const Register = () => {
 							alignItems: 'center'
 						}}>
 						<Typography component="h1" variant="h4" sx={{ fontFamily: 'Braah One, sans-serif' }}>
-							{t('register')}
+							Registrácia
 						</Typography>
 						<Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
 							<Grid container spacing={1}>
@@ -115,7 +108,7 @@ const Register = () => {
 										required
 										fullWidth
 										id="email"
-										label={formik.touched.email && formik.errors.email ? formik.errors.email : t('email')}
+										label={formik.touched.email && formik.errors.email ? formik.errors.email : "email"}
 										name="email"
 										value={formik.values.email}
 										onChange={formik.handleChange}
@@ -129,7 +122,7 @@ const Register = () => {
 										required
 										fullWidth
 										name="password"
-										label={formik.touched.password && formik.errors.password ? formik.errors.password : t('password')}
+										label={formik.touched.password && formik.errors.password ? formik.errors.password : "heslo"}
 										type="password"
 										id="password"
 										value={formik.values.password}
@@ -138,49 +131,14 @@ const Register = () => {
 										autoComplete="off"
 									/>
 								</Grid>
-								<Grid item xs={12}>
-									<FormControl fullWidth required error={formik.touched.role && !!formik.errors.role}>
-										<InputLabel
-											htmlFor="role"
-											style={formik.touched.role && formik.errors.role ? { color: 'red' } : {}}>
-											{formik.touched.role && formik.errors.role ? formik.errors.role : t('role')}
-										</InputLabel>
-										<Select
-											id="role"
-											name="role"
-											value={formik.values.role}
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}>
-											<MenuItem value="">
-												<em>None</em>
-											</MenuItem>
-											<MenuItem value="student">{t('student')}</MenuItem>
-											<MenuItem value="teacher">{t('teacher')}</MenuItem>
-										</Select>
-									</FormControl>
-								</Grid>
-								<Grid item xs={12}>
-									<TextField
-										error={formik.touched.aisId && !!formik.errors.aisId}
-										required
-										fullWidth
-										name="aisId"
-										label={formik.touched.aisId && formik.errors.aisId ? formik.errors.aisId : t('aisId')}
-										type="number"
-										id="aisId"
-										value={formik.values.aisId}
-										onChange={formik.handleChange}
-										onBlur={formik.handleBlur}
-										autoComplete="off"
-									/>
-								</Grid>
+				
 								<Grid item xs={12}>
 									<TextField
 										error={formik.touched.name && !!formik.errors.name}
 										required
 										fullWidth
 										name="name"
-										label={formik.touched.name && formik.errors.name ? formik.errors.name : t('name')}
+										label={formik.touched.name && formik.errors.name ? formik.errors.name : "meno"}
 										type="text"
 										id="name"
 										value={formik.values.name}
@@ -195,7 +153,7 @@ const Register = () => {
 										required
 										fullWidth
 										name="surname"
-										label={formik.touched.surname && formik.errors.surname ? formik.errors.surname : t('surname')}
+										label={formik.touched.surname && formik.errors.surname ? formik.errors.surname : "priezvisko"}
 										type="text"
 										id="surname"
 										value={formik.values.surname}
@@ -206,12 +164,12 @@ const Register = () => {
 								</Grid>
 							</Grid>
 							<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-								{t('registerBtn')}
+								Registrácia
 							</Button>
 							<Grid container justifyContent="flex-start">
 								<Grid item>
 									<Link href="#" variant="body2" onClick={() => navigate('/login')}>
-										{t('alreadyHaveAcc')}
+										Už máte konto?
 									</Link>
 								</Grid>
 							</Grid>
