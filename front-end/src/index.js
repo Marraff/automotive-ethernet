@@ -3,7 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthProvider } from './contexts/JWTContext';
+import { BrowserRouter } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+	<React.StrictMode>
+		<BrowserRouter>
+			<AuthProvider>
+				<SnackbarProvider maxSnack={2}>
+					<App />
+				</SnackbarProvider>
+			</AuthProvider>
+		</BrowserRouter>
+	</React.StrictMode>
+);
+
+/*
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -11,3 +29,4 @@ root.render(
   </React.StrictMode>
 );
 
+*/
