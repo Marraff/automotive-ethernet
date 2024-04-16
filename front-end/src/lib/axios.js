@@ -4,8 +4,8 @@ import AppService from '../services/AppService';
 const axiosInstance = axios.create({
 	//baseURL: 'http://147.175.98.115:8000'
 
-	//For local development
-	 baseURL: 'http://localhost:80'
+	//For local development 3306 / 3000
+	 baseURL: 'http://localhost:3000'
 });
 
 axiosInstance.interceptors.request.use(async req => {

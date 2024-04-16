@@ -50,9 +50,8 @@ const Register = () => {
 
 	const onSubmit = async (values, { resetForm }) => {
 		try {
-			const tempRoles = [];
-			tempRoles.push(values.role);
-			await register(values.email, values.password, tempRoles, values.aisId, values.name, values.surname);
+			
+			await register(values.email, values.password, values.name, values.surname);
 			resetForm();
 			navigate('/login', { state: { registered: true } });
 		} catch (error) {
