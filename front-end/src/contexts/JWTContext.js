@@ -113,10 +113,20 @@ export const AuthProvider = ({ children }) => {
 		dispatch({ type: 'LOGOUT' });
 	};
 
-	const register = async (email, password, role, aisId, name, surname) => {
+	/*const register = async (email, password, name, surname) => {
 		dispatch({ type: 'LOADING', payload: { loading: true } });
 		try {
-			await AuthService.register({ email, password, role, aisId, name, surname });
+			await AuthService.register({ email, password, name, surname });
+			dispatch({ type: 'LOADING', payload: { loading: false } });
+		} catch (error) {
+			dispatch({ type: 'LOADING', payload: { loading: false } });
+			throw new Error(error.message);
+		}
+	};*/
+	const register = async (data) => {
+		dispatch({ type: 'LOADING', payload: { loading: true } });
+		try {
+			await AuthService.register(data);
 			dispatch({ type: 'LOADING', payload: { loading: false } });
 		} catch (error) {
 			dispatch({ type: 'LOADING', payload: { loading: false } });

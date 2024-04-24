@@ -18,6 +18,8 @@ import useAuth from '../../hooks/useAuth';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Navbar from '../../components/Navigationbar';
+import axios from 'axios';
+import AppService from '../../services/AppService';
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -56,8 +58,26 @@ const Login = () => {
 	}, [location.state]);
 
 	const onSubmit = async (values, { resetForm }) => {
+
 		try {
-			await login(values.email, values.password);
+
+			//await login(values.email, values.password);
+			const resp = await axios.post('http://localhost:80/api/login.php', values);
+			const errorMessage = resp.data.split('\n')[2];
+
+			if (resp.status == 201){
+				setStatus(`${"error"} ${errorMessage}`);
+				handleClick();
+			}
+			
+			if (resp.status == 200){
+
+				const token = resp.data.split('"')[5];
+				AppService.setToken(token);
+				navigate('/DashBoardLoggedIn', { state: { registered: true, token: token } });
+
+			}
+
 		} catch (error) {
 			setStatus(`$'error' ${error.message}`);
 			handleClick();

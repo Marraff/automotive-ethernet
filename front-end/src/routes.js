@@ -15,6 +15,7 @@ const NotFound = Loadable(lazy(() => import('./components/NotFound')));
 const AuthGuard = Loadable(lazy(() => import('./components/guards/AuthGuard')));
 
 const DashBoard = Loadable(lazy(() => import('./pages/dashboard/DashBoard')));
+const DashBoardLoggedIn = Loadable(lazy(() => import('./pages/dashboard/DashBoardLoggedIn')));
 const DashboardLayout = Loadable(lazy(() => import('./components/DashboardLayout')));
 
 const routes = [
@@ -44,6 +45,14 @@ const routes = [
 		element: (
 			<GuestGuard>
 				<DashBoard />
+			</GuestGuard>
+		)
+	},
+	{
+		path: '/DashBoardLoggedIn',
+		element: (
+			<GuestGuard>
+				<DashBoardLoggedIn />
 			</GuestGuard>
 		)
 	}

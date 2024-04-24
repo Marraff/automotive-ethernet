@@ -19,6 +19,11 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import useAuth from '../../hooks/useAuth';
 import Navbar from '../../components/Navigationbar';
+import AuthService from '../../services/AppService';
+import axios from 'axios';
+
+import { useSnackbar } from 'notistack';
+import CryptoJS from 'crypto-js';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -29,6 +34,8 @@ const Register = () => {
 	const { register, loading } = useAuth();
 	const [open, setOpen] = React.useState(false);
 	const [status, setStatus] = React.useState('');
+
+	const { enqueueSnackbar } = useSnackbar();
 
 	const handleClick = () => {
 		setOpen(true);
@@ -49,13 +56,27 @@ const Register = () => {
 	});
 
 	const onSubmit = async (values, { resetForm }) => {
+		
+		
 		try {
 			
-			await register(values.email, values.password, values.name, values.surname);
-			resetForm();
-			navigate('/login', { state: { registered: true } });
-		} catch (error) {
+			const resp = await axios.post('http://localhost:80/api/register.php',values);
+			const errorMessage = resp.data.split('\n')[2];
+			
+			if (errorMessage != ""){
+				setStatus(`${"error"} ${errorMessage}`);
+				handleClick();
+			}
+			//await register(values);
+			if (errorMessage == ""){
+				resetForm();
+				navigate('/login', { state: { registered: true } });
+			}
+			} catch (error) {
+
 			setStatus(`${"error"} ${error.message}`);
+			//console.log('responseData');
+			
 			handleClick();
 		}
 	};
