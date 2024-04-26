@@ -5,10 +5,76 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect } from 'react';
+import React from 'react';
+import AppService from '../services/AppService';
+
 
 function NavScrollExample() {
 
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+	const [status, setStatus] = React.useState('');
+
+
+  const handleClick = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
+
+
+	useEffect(() => {
+
+		if (window.localStorage.accessToken){
+			setTimeout(()=>{
+				
+				  const axiosInstance = axios.create({
+					baseURL: "http://localhost:80/api",
+					timeout: 3000,
+					headers: {Authorization: `bearer ${window.localStorage.accessToken}`}
+				  })
+  
+					async function validateToken(){
+						try{
+							
+							const resp = await axiosInstance.post('/validate.php');
+							
+							if (!resp){
+								navigate('/');
+							}
+							const user = AppService.getUser();
+							
+							if(user){
+								navigate('/Admin', { state: { registered: true, token: window.localStorage.accessToken } });
+							}
+							else{
+								navigate('/DashBoardLoggedIn', { state: { registered: true, token: window.localStorage.accessToken } });
+							}
+							
+						}catch(error){
+							setStatus(`$'error' ${error.message}`);
+							handleClick();
+						}        
+					}
+					validateToken();
+				
+			},1000)
+		}
+
+		
+	}, [navigate,setStatus,handleClick]);
+
+
+	
+
+
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">

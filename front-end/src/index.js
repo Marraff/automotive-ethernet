@@ -29,4 +29,16 @@ root.render(
   </React.StrictMode>
 );
 
+
+
+<React.StrictMode>
+		<BrowserRouter>
+			<AuthProvider>
+				<SnackbarProvider maxSnack={2}>
+					<App />
+				</SnackbarProvider>
+			</AuthProvider>
+		</BrowserRouter>
+	</React.StrictMode>
+
 */

@@ -4,9 +4,13 @@ import ArticleCards from '../../components/ArticleCards.js';
 import VideoCards from '../../components/VideoCards.js';
 import WelcomeCard from '../../components/WelcomeCard.js';
 import '../../App.css';
+import VideosTable from '../../components/VideosTable.js';
+import ArticlesTable from '../../components/ArticlesTable.js'
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
-const DashBoardLoggedIn = () => {
-	
+const Admin = () => {
 
     return (
         <div>
@@ -14,17 +18,14 @@ const DashBoardLoggedIn = () => {
                 <NavBarloggedIn />
             </div>
             <div>
-               <WelcomeCard />
+                <VideosTable />
             </div>
             <div>
-                <ArticleCards />
-            </div>
-            <div>
-                <VideoCards />
+                <ArticlesTable />
             </div>
         </div>
     
       );
 };
 
-export default DashBoardLoggedIn;
+export default Admin;

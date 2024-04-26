@@ -21,7 +21,8 @@ import useAuth from '../../hooks/useAuth';
 import Navbar from '../../components/Navigationbar';
 import AuthService from '../../services/AppService';
 import axios from 'axios';
-
+import { useEffect } from 'react';
+import AppService from '../../services/AppService';
 import { useSnackbar } from 'notistack';
 import CryptoJS from 'crypto-js';
 
@@ -34,7 +35,6 @@ const Register = () => {
 	const { register, loading } = useAuth();
 	const [open, setOpen] = React.useState(false);
 	const [status, setStatus] = React.useState('');
-
 	const { enqueueSnackbar } = useSnackbar();
 
 	const handleClick = () => {
@@ -48,6 +48,52 @@ const Register = () => {
 		setOpen(false);
 	};
 
+
+	useEffect(() => {
+
+		if (window.localStorage.accessToken){
+			setTimeout(()=>{
+				
+				  const axiosInstance = axios.create({
+					baseURL: "http://localhost:80/api",
+					timeout: 3000,
+					headers: {Authorization: `bearer ${window.localStorage.accessToken}`}
+				  })
+  
+					async function validateToken(){
+						try{
+							
+							const resp = await axiosInstance.post('/validate.php');
+							
+							if (!resp){
+								navigate('/Register');
+							}
+
+							const user = AppService.getUser();
+							
+							if(user){
+								navigate('/Admin', { state: { registered: true, token: window.localStorage.accessToken } });
+							}
+							else{
+								navigate('/DashBoardLoggedIn', { state: { registered: true, token: window.localStorage.accessToken } });
+							}
+							
+							
+						}catch(error){
+							setStatus(`$'error' ${error.message}`);
+							handleClick();
+						}        
+					}
+					validateToken();
+				
+			},1000)
+		}
+
+		
+	}, [navigate,setStatus,handleClick]);
+
+
+	
 	const validationSchema = Yup.object({
 		email: Yup.string().email("nesprávny formát").required("povinné pole"),
 		password: Yup.string().min(6, "nesprávne heslo").required("povinné pole"),

@@ -65,7 +65,8 @@ export const AuthProvider = ({ children }) => {
 			if (accessToken) {
 				try {
 					dispatch({ type: 'LOADING', payload: { loading: true } });
-					const user = await AuthService.me();
+					//const user = await AuthService.me();
+					const user = accessToken;
 					dispatch({
 						type: 'INITIALIZE',
 						payload: {

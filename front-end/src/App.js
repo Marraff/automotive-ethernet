@@ -4,6 +4,7 @@ import routes from './routes';
 import useAuth from './hooks/useAuth';
 import { experimentalStyled } from '@mui/material/styles';
 import React from 'react';
+import Dashboard from './pages/dashboard/DashBoard';
 
 const AppContainer = experimentalStyled('div')(() => ({
 	position: 'absolute',
@@ -21,6 +22,7 @@ const App = () => {
 	const auth = useAuth();
 
 	return <AppContainer>{auth.isInitialized ? content : <NotFound />}</AppContainer>;
+	//return <Dashboard/>
 };
 
 export default App;

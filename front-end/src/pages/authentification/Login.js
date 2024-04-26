@@ -51,11 +51,43 @@ const Login = () => {
 	});
 
 	useEffect(() => {
+
+		if (window.localStorage.accessToken){
+			setTimeout(()=>{
+				
+				  const axiosInstance = axios.create({
+					baseURL: "http://localhost:80/api",
+					timeout: 3000,
+					headers: {Authorization: `bearer ${window.localStorage.accessToken}`}
+				  })
+  
+					async function validateToken(){
+						try{
+							
+							const resp = await axiosInstance.post('/validate.php');
+							
+							if (!resp){
+								navigate('/Login');
+							}
+							else{
+								navigate('/DashBoardLoggedIn', { state: { registered: true, token: window.localStorage.accessToken } });
+							}
+							
+						}catch(error){
+							setStatus(`$'error' ${error.message}`);
+							handleClick();
+						}        
+					}
+					validateToken();
+				
+			},1000)
+		}
+
 		if (location.state?.registered) {
 			location.state = null;
 			enqueueSnackbar("registrácia úspešná", { variant: 'success' });
 		}
-	}, [location.state]);
+	}, [location.state,navigate,setStatus,handleClick]);
 
 	const onSubmit = async (values, { resetForm }) => {
 
@@ -73,9 +105,21 @@ const Login = () => {
 			if (resp.status == 200){
 
 				const token = resp.data.split('"')[5];
-				AppService.setToken(token);
-				navigate('/DashBoardLoggedIn', { state: { registered: true, token: token } });
+				//console.log(resp.data.split('"')[9]);
 
+				if(resp.data.split('"')[9]){
+					AppService.setToken(token);
+					AppService.setUser(resp.data.split('"')[9]);
+					navigate('/Admin', { state: { registered: true, token: token } });
+
+				}
+				else{
+					//console.log(resp.data);
+					AppService.setToken(token);
+					navigate('/DashBoardLoggedIn', { state: { registered: true, token: token } });
+
+				}
+				
 			}
 
 		} catch (error) {
