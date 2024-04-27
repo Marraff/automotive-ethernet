@@ -20,6 +20,26 @@ function GridExample() {
     const [status, setStatus] = React.useState([]);
     const [open, setOpen] = React.useState(false);
 
+    const videoContainerStyle = {
+        //border: '1px solid #ccc',
+        //borderRadius: '5px',
+        padding: '10px',
+        marginBottom: '20px',
+      };
+      
+      const videoStyle = {
+        width: '100%', // Set width to 100% to fill the container
+        height: '315px', // Set a fixed height for the aspect ratio
+        objectFit: 'cover',
+        //borderRadius: '5px',
+      };
+      
+      const videoNameStyle = {
+        marginTop: '10px',
+        fontWeight: 'bold',
+        textAlign: 'center', // Center text horizontally
+      };
+
     const handleClick = () => {
 		setOpen(true);
 	};
@@ -57,7 +77,34 @@ function GridExample() {
         </Container>
         </Navbar>
 
-        <Row  md={2} className="g-4" style={{'align-items': 'stretch', padding: '7% 10%' }}>
+       
+
+        <Row md={2} className="g-4" style={{ alignItems: 'stretch', padding: '7% 10%' }}>
+            {videos.map(video => (
+            <Col key={video.id}>
+                <div style={videoContainerStyle}>
+                <iframe
+                    width="100%"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${video.ytb_id}`}
+                    title={video.name}
+                    allowFullScreen
+                    style={videoStyle}
+                ></iframe>
+                <div style={videoNameStyle}>{video.name}</div>
+                </div>
+            </Col>
+            ))}
+      </Row>
+
+    </div>
+  );
+}
+
+export default GridExample;
+
+/*
+ <Row  md={2} className="g-4" style={{'align-items': 'stretch', padding: '7% 10%' }}>
         {videos.map((video) => (
         <div key={video.id} className="video-container">
            <iframe
@@ -71,38 +118,5 @@ function GridExample() {
         </div>
       ))}
         </Row>
-    </div>
-  );
-}
-
-export default GridExample;
-
-/*
-<div>
-
-        <Navbar expand="lg" className="bg-body-tertiary">
-        <Container fluid>
-            <Navbar.Brand href="#" style={{'font-weight': 'bold'}}>Videá</Navbar.Brand>
-        </Container>
-        </Navbar>
-
-        <Row xs={1} md={4} className="g-4" style={{'align-items': 'stretch', padding: '7% 10%' }}>
-        {Array.from({ length: 7 }).map((_, idx) => (
-            <Col key={idx}>
-            <Card border="success">
-                <Card.Img variant="top" src="holder.js/100px160" />
-                <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
-                </Card.Text>
-                </Card.Body>
-            </Card>
-            </Col>
-        ))}
-        </Row>
-    </div>
 
 */

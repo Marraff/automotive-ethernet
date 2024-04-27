@@ -1,4 +1,4 @@
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -131,7 +131,10 @@ function NavScrollExample() {
           </Nav>
 
           <ButtonGroup className="mb-2" >
-            <Button onClick={loggout}>odhlásenie</Button>
+            <Button onClick={loggout}  
+                    type="contained"           
+                    variant="contained" 
+                    sx={{ mt: 3, mb: 2 }} >odhlásenie</Button>
 
           </ButtonGroup>
          

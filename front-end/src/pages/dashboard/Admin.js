@@ -1,14 +1,9 @@
 import React from 'react';
 import NavBarloggedIn from '../../components/NavigationbarLoggedIn.js';
-import ArticleCards from '../../components/ArticleCards.js';
-import VideoCards from '../../components/VideoCards.js';
-import WelcomeCard from '../../components/WelcomeCard.js';
 import '../../App.css';
 import VideosTable from '../../components/VideosTable.js';
-import ArticlesTable from '../../components/ArticlesTable.js'
-import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import ArticlesTable from '../../components/ArticlesTable.js';
+import TestsTable from '../../components/TestsTable.js';
 
 const Admin = () => {
 
@@ -22,6 +17,9 @@ const Admin = () => {
             </div>
             <div>
                 <ArticlesTable />
+            </div>
+            <div>
+                <TestsTable />
             </div>
         </div>
     

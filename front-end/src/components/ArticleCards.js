@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { useSnackbar } from 'notistack';
 import React from 'react'; 
+import Link from '@mui/material/Link'
 
 function GridExample() {
 
@@ -19,31 +20,60 @@ function GridExample() {
     const [open, setOpen] = React.useState(false);
 	const [status, setStatus] = React.useState([]);
 
+    const articleContainerStyle = {
+        //border: '1px solid #ccc',
+        //borderRadius: '5px',
+        padding: '10px',
+        marginBottom: '20px',
+    };
+      
+    const articlePhotoStyle = {
+        width: '100%', // Set width to 100% to fill the container
+        height: '315px', // Set a fixed height for the aspect ratio
+        objectFit: 'cover',
+        //borderRadius: '5px',
+    };
+      
+    const articleNameStyle = {
+        marginTop: '10px',
+        fontWeight: 'bold',
+        textAlign: 'center', // Center text horizontally
+    };
+
     const handleClick = (filePath) => {
         window.open(filePath, '_blank');
-      };
+    };
+      
+    const openPDF = (pdfData) => {
+        const pdfURL = `data:application/pdf;base64,${pdfData}`;
+    
+        // Create a new window or tab with an embedded PDF viewer
+        const newWindow = window.open();
+        newWindow.document.write(`
+            <iframe src="${pdfURL}" style="width: 100%; height: 100%;" frameborder="0"></iframe>
+        `);
+        };
 
     useEffect(() => {
 
         async function getArticles(){
-            try{
-                
-                const resp = await axios.get('http://localhost:80/api/article.php');
-                
-                //console.log(resp);
-                /*const jsonD = resp.data.split('"articles":')[1]
-                const str = jsonD.substring(0, jsonD.length - 1);
+           
+            try {
+
+                const response = await axios.get('http://localhost:80/api/article_content.php');
+                //console.log(response.data);
+                const jsonD = response.data.split('[{')[1]
+                //console.log(jsonD);
+                const str = "[{"+jsonD;
                 const dataArray = JSON.parse(str);
-                setArticles(dataArray);*/
-                
-                
-            }catch(error){
-                //setStatus(`$'error' ${error.message}`);
+                setArticles(dataArray);
+
+              } catch (error) {
                 enqueueSnackbar(`$'error' ${error.message}`, { variant: 'error' });
-            }        
+              }    
         }
         getArticles();
-        console.log(articles);
+        //console.log(articles);
         		
 	}, [])
 
@@ -57,46 +87,20 @@ function GridExample() {
         </Container>
         </Navbar>
 
-        <Row xs={1} md={4} className="g-4" style={{'align-items': 'stretch', padding: '7% 10%' }}>
-            <ul>
-                {articles.map((article) => (
-                <li key={article.id} onClick={() => handleClick(article.file_path)}>
-                    {article.name}
-                </li>
+        <Row md={3} className="g-4" style={{ alignItems: 'stretch', padding: '7% 10%' }}>
+                {articles.map(article => (
+                    <Col key={article.id}>
+                        <div style={articleContainerStyle} onClick={() => openPDF(article.pdf_data)}>
+                            <img src={`data:image/jpeg;base64,${article.image_data}`} alt="Article Photo" style={articlePhotoStyle} />
+                            <div style={articleNameStyle}>{article.name.slice(0, -4)}</div>
+                        </div>
+                    </Col>
                 ))}
-            </ul>
-        </Row>
+            </Row>
+
+        
     </div>
   );
 }
 
 export default GridExample;
-
-/*
-<div>
-
-        <Navbar expand="lg" className="bg-body-tertiary">
-        <Container fluid>
-            <Navbar.Brand href="#" style={{'font-weight': 'bold'}}>Články</Navbar.Brand>
-        </Container>
-        </Navbar>
-
-        <Row xs={1} md={4} className="g-4" style={{'align-items': 'stretch', padding: '7% 10%' }}>
-        {Array.from({ length: 8 }).map((_, idx) => (
-            <Col key={idx}>
-            <Card  border="primary">
-                <Card.Img variant="top" src="holder.js/100px160" />
-                <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer. 
-                </Card.Text>
-                </Card.Body>
-            </Card>
-            </Col>
-        ))}
-        </Row>
-    </div>
-*/

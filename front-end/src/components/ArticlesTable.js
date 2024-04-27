@@ -57,9 +57,6 @@ function ArticlesTable() {
     const [file, setFile] = React.useState(null);
     const [photo, setPhoto] = React.useState();
 
-    const [author, setAuthor] = React.useState();
-    const [name, setName] = React.useState();
-
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',
@@ -109,13 +106,14 @@ function ArticlesTable() {
 
     const handleAdd = (data) => {
         // Implement delete functionality here
-        console.log(`Adding data: ${data}`);
-        async function addVideo(data){
+        //console.log(`Adding data: ${data}`);
+        async function addArticle(data){
             try{
                 //console.log(data);
 
                 const formData = new FormData();
                 formData.append('pdfFile', file);
+                formData.append('photo', photo);
 
                 const resp = await axios.post('http://localhost:80/api/article.php', formData);
                 
@@ -130,7 +128,7 @@ function ArticlesTable() {
                     enqueueSnackbar("Nový článok úspešne pridaný", { variant: 'success' });
                 }
                 else{
-                    enqueueSnackbar("vložiť sa dajú iba .pdf súbory menšie ako 2MB", { variant: 'error' });
+                    enqueueSnackbar("vložiť sa dajú iba .pdf .jpg/.jpeg súbory!", { variant: 'error' });
              
                 }
                 
@@ -139,7 +137,7 @@ function ArticlesTable() {
                 enqueueSnackbar(`$'error' ${error.message}`, { variant: 'error' });
             }        
         }
-        addVideo(data);
+        addArticle(data);
     };
 
     const handleClick = () => {
@@ -151,7 +149,25 @@ function ArticlesTable() {
 			return;
 		}
 		setOpen(false);
+        setFile();
+        setPhoto();
 	};
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Check if both files are attached
+        if (file && photo) {
+          const formData = new FormData(event.currentTarget);
+          const formJson = Object.fromEntries(formData.entries());
+          // Add logic to handle form submission with both files
+          console.log(formJson);
+          handleClose();
+        } else {
+          // Alert user if both files are not attached
+          enqueueSnackbar('Please attach both files before submitting.', { variant: 'error' });
+          
+        }
+      };
 
     useEffect(() => {
 
@@ -210,7 +226,7 @@ function ArticlesTable() {
                 
                     <Button
                         component="label"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{ mt: 3, mb: 2, width: 'auto' }}
                         role={undefined}
                         variant="contained"
                         tabIndex={-1}
@@ -219,13 +235,25 @@ function ArticlesTable() {
                         Nahraj článok
                     <VisuallyHiddenInput type="file"  onChange={handleFile}/>
                     </Button>
+                    {file && <div>{file.name}</div>} {/* Display file name if attached */}
 
-                   
-                
+                    <Button
+                        component="label"
+                        sx={{ mt: 3, mb: 2, }}
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                        >
+                        Nahraj titulný obrázok
+                    <VisuallyHiddenInput type="file"  onChange={handlephoto}/>
+                    </Button>
+                    {photo && <div>{photo.name}</div>} {/* Display file name if attached */}
+
                    
                     <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" >Pridaj</Button>
+                    <Button type="submit" disabled={!file || !photo}>Pridaj</Button>
                 </DialogActions>
             </Dialog>
         </div>
