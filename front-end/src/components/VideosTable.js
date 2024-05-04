@@ -197,7 +197,7 @@ function VideosTable() {
                 
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>zruš</Button>
                     <Button type="submit" >Pridaj</Button>
                 </DialogActions>
             </Dialog>

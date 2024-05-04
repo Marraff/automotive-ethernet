@@ -252,7 +252,7 @@ function ArticlesTable() {
 
                    
                     <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Zruš</Button>
                     <Button type="submit" disabled={!file || !photo}>Pridaj</Button>
                 </DialogActions>
             </Dialog>
