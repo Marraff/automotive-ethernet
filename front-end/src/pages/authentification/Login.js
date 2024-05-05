@@ -164,7 +164,7 @@ const Login = () => {
 							alignItems: 'center'
 						}}>
 						<Typography component="h1" variant="h4" sx={{ fontFamily: 'Braah One, sans-serif' }}>
-							login
+							Prihlásenie
 						</Typography>
 						<Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
 							<TextField

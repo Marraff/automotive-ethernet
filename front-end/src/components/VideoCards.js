@@ -27,14 +27,14 @@ function GridExample() {
         marginBottom: '20px',
       };
       
-      const videoStyle = {
+    const videoStyle = {
         width: '100%', // Set width to 100% to fill the container
         height: '315px', // Set a fixed height for the aspect ratio
         objectFit: 'cover',
         //borderRadius: '5px',
       };
       
-      const videoNameStyle = {
+    const videoNameStyle = {
         marginTop: '10px',
         fontWeight: 'bold',
         textAlign: 'center', // Center text horizontally
@@ -42,7 +42,7 @@ function GridExample() {
 
     const handleClick = () => {
 		setOpen(true);
-	};
+	    };
 
     useEffect(() => {
 
@@ -63,9 +63,9 @@ function GridExample() {
             }        
         }
         getVideos();
-        console.log(videos);
+        //console.log(videos);
         		
-	}, [])
+	    }, [])
 
     return (
     
