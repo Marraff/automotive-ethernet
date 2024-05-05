@@ -19,23 +19,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 function NavScrollExample() {
-/*
-	const navigate = useNavigate();
-	const [open, setOpen] = React.useState(false);
-	const [status, setStatus] = React.useState('');
 
-
-	const handleClick = () => {
-			setOpen(true);
-	};
-
-	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-		setOpen(false);
-	};
-*/
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -113,7 +97,7 @@ function NavScrollExample() {
 	useEffect(() => {
 
 		if (window.localStorage.accessToken){
-			setTimeout(()=>{
+			//setTimeout(()=>{
 				
 					const axiosInstance = axios.create({
 					baseURL: "http://localhost:80/api",
@@ -145,7 +129,7 @@ function NavScrollExample() {
 					}
 					validateToken();
 
-			},1000)
+			//},1000)
 		}
 		else{
 

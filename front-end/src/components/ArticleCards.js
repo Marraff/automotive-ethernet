@@ -1,16 +1,18 @@
-import Card from 'react-bootstrap/Card';
+
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Container from 'react-bootstrap/Container';
 import axios from 'axios';
 import { useEffect } from 'react';
-import Button from '@mui/material/Button';
 import { useSnackbar } from 'notistack';
 import React from 'react'; 
+import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snackbar, AppBar, Toolbar } from '@mui/material';
+//import { Link } from 'react-router-dom';
+
+import wallpaper from '../images/background_main.jpg';
 import Link from '@mui/material/Link'
 
 function GridExample() {
@@ -23,8 +25,11 @@ function GridExample() {
     const articleContainerStyle = {
         //border: '1px solid #ccc',
         //borderRadius: '5px',
-        padding: '10px',
+        //padding: '10px',
         marginBottom: '20px',
+        backgroundColor: '#1976d2',
+        color: 'white',
+        fontSize: '20px',
     };
       
     const articlePhotoStyle = {
@@ -80,13 +85,24 @@ function GridExample() {
     return (
     
     <div>
-
-        <Navbar expand="lg" className="bg-body-tertiary">
-        <Container fluid>
-            <Navbar.Brand href="#" style={{'font-weight': 'bold'}}>Články</Navbar.Brand>
-        </Container>
-        </Navbar>
-
+<div style={{ 
+      backgroundImage: `url(${wallpaper})`, 
+      backgroundSize: 'cover', 
+      backgroundRepeat: 'repeat-y',
+      backgroundPosition: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+         
+        }}>
+       
+        <AppBar position="static" elevation={0} >
+                <Toolbar>
+                    <Typography variant="h6"  style={{ flex: 1, fontWeight: 'bold', textDecoration: 'none', color: 'inherit' }} >
+                        Články
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <div>
         <Row md={3} className="g-4" style={{ alignItems: 'stretch', padding: '7% 10%' }}>
                 {articles.map(article => (
                     <Col key={article.id}>
@@ -96,9 +112,10 @@ function GridExample() {
                         </div>
                     </Col>
                 ))}
-            </Row>
+        </Row>
+            </div>
 
-        
+        </div>
     </div>
   );
 }

@@ -16,6 +16,8 @@ import { useSnackbar } from 'notistack';
 import DataTable from 'react-data-table-component';
 import { useEffect } from 'react';
 
+import wallpaper from '../images/math_custom-low.png';
+
 function QuizForm() {
 
   const columns = [
@@ -186,8 +188,20 @@ function QuizForm() {
 }, [])
 
   return (
-    <div>
+    <div style={{ 
+      backgroundImage: `url(${wallpaper})`, 
+      backgroundSize: 'cover', 
+      backgroundRepeat: 'repeat-y',
+      backgroundPosition: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+         
+        }}>
        <div className='container mt-5'>
+       <div>
+       <div style={{ backgroundColor: 'white', padding: '10px' }}>
+            <h1>Testy</h1>
+        </div>
       <Button variant="contained" onClick={handleOpen}> Vytvor test</Button>
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
@@ -256,7 +270,7 @@ function QuizForm() {
           <Button onClick={handleSubmit} variant="contained">pridaj</Button>
         </DialogActions>
       </Dialog>
-
+      </div>
       <DataTable
             columns={columns}
             data={tests}

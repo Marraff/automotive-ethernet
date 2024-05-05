@@ -21,6 +21,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import wallpaper from '../images/math_custom-low.png';
+
 function VideosTable() {
 
     const columns = [
@@ -134,11 +136,21 @@ function VideosTable() {
     
    return (
     
-    <div>
+    <div style={{ 
+        backgroundImage: `url(${wallpaper})`, 
+        backgroundSize: 'cover', 
+        backgroundRepeat: 'repeat-y',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+           
+          }}>
       
       <div className='container mt-5'>
         <div>
-            <h2>Videá</h2>
+        <div style={{ backgroundColor: 'white', padding: '10px' }}>
+            <h1>Videá</h1>
+        </div>
             <Button
                 type="submit"  
                 variant="contained" 

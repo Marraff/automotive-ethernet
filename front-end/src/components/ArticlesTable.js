@@ -22,6 +22,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import wallpaper from '../images/math_custom-low.png';
 
 
 
@@ -194,11 +195,21 @@ function ArticlesTable() {
     
    return (
     
-    <div>
+    <div style={{ 
+        backgroundImage: `url(${wallpaper})`, 
+        backgroundSize: 'cover', 
+        backgroundRepeat: 'repeat-y',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+           
+          }}>
       
       <div className='container mt-5'>
         <div>
-            <h2>Články</h2>
+        <div style={{ backgroundColor: 'white', padding: '10px' }}>
+            <h1>Články</h1>
+        </div>
             <Button
                 type="submit"  
                 variant="contained" 

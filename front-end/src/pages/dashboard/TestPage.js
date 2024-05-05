@@ -21,6 +21,8 @@ import NavBarLoggedIn from '../../components/NavigationbarLoggedIn.js';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import math_wallpaper from '../../images/math_wallpaper2.jpg';
+
 function QuizForm() {
 
   const columns = [
@@ -99,13 +101,7 @@ function QuizForm() {
     
 
     if(quiz.length == selectedAnswers.length){
-        /*const newPoints = selectedAnswers.reduce((totalPoints, selectedAnswer, questionIndex) => {
-            const correctAnswerIndex = quiz[questionIndex].answers.findIndex(answer => answer.isCorrect);
-            return selectedAnswer === correctAnswerIndex ? totalPoints + 1 : totalPoints;
-          }, 0);
-    
-        setPoints(newPoints);
-        setShowResults(true);*/
+        
         let newPoints = 0;
         for (let i = 0; i < quiz.length; i++) {
           const correctAnswerIndex = quiz[i].answers.findIndex(answer => answer.isCorrect);
@@ -165,86 +161,106 @@ function QuizForm() {
 }, [])
 
   return (
-    <div>
-    <NavBarLoggedIn />
-    <div className='container mt-5'>
-      <DataTable
-        columns={columns}
-        data={tests}
-        pagination
-        highlightOnHover
-        striped
-        dense
-      />
-    </div>
-    <Dialog open={showQuiz} onClose={handleCloseQuiz} fullWidth maxWidth="md">
-        <DialogTitle style={{ textAlign: 'center' }} variant='h5'>{testName}</DialogTitle>
+    <div >
+       
 
+        <NavBarLoggedIn />
 
-      <DialogContent>
-  {quiz.map((question, questionIndex) => (
-    <div key={questionIndex} className="question-container">
-      <Typography variant="h6" gutterBottom>
-        Otázka {questionIndex + 1}:
-      </Typography>
-      <Typography variant="h6" gutterBottom>
-        {question.question}
-      </Typography>
-      {question.answers.map((answer, answerIndex) => (
-        <div key={answerIndex} className="answer-container" style={{ textAlign: 'center' }}>
+        <div style={{ 
+      backgroundImage: `url(${math_wallpaper})`, 
+      backgroundSize: 'contain', 
+      backgroundRepeat: 'repeat-y',
+      backgroundPosition: 'center',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
          
-          <Button
-            variant={selectedAnswers[questionIndex] === answerIndex ? "contained" : "outlined"}
-            sx={{ width: '90%', mt: 1, mb: 1 }}
-            startIcon={selectedAnswers[questionIndex] === answerIndex ? <CheckCircleIcon /> : <RadioButtonUncheckedIcon />}
-            onClick={() => handleAnswerClick(questionIndex, answerIndex)}
-          >{answer.answer}</Button>
+        }}>
+
+        <div className='container mt-5' >
+          <DataTable
+            columns={columns}
+            data={tests}
+            pagination
+            highlightOnHover
+            striped
+            dense
+          />
+        
+        </div>
+        </div>
+        <Dialog open={showQuiz} onClose={handleCloseQuiz} fullWidth maxWidth="md">
+            <DialogTitle style={{ textAlign: 'center' }} variant='h5'>{testName}</DialogTitle>
+
+
+          <DialogContent>
+      {quiz.map((question, questionIndex) => (
+        <div key={questionIndex} className="question-container">
+          <Typography variant="h6" gutterBottom>
+            Otázka {questionIndex + 1}:
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            {question.question}
+          </Typography>
+          {question.answers.map((answer, answerIndex) => (
+            <div key={answerIndex} className="answer-container" style={{ textAlign: 'center' }}>
+            
+              <Button
+                variant={selectedAnswers[questionIndex] === answerIndex ? "contained" : "outlined"}
+                sx={{ width: '90%', mt: 1, mb: 1 }}
+                startIcon={selectedAnswers[questionIndex] === answerIndex ? <CheckCircleIcon /> : <RadioButtonUncheckedIcon />}
+                onClick={() => handleAnswerClick(questionIndex, answerIndex)}
+              >{answer.answer}</Button>
+            </div>
+          ))}
         </div>
       ))}
-    </div>
-  ))}
- {showResults && (
-  <div>
-    <Typography variant="h6" gutterBottom style={{ textAlign: 'center', marginBottom: '16px' }}>
-      Tvoje Skóre: {points} z {quiz.length}
-    </Typography>
-    <Typography variant="body1" gutterBottom style={{ textAlign: 'center', marginBottom: '16px' }}>
-      Správne odpovede:
-    </Typography>
-    <Grid container justifyContent="center" spacing={2}>
-      {quiz.map((question, questionIndex) => (
-        <Grid item xs={12} key={questionIndex}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: '16px',
-              backgroundColor:
-                selectedAnswers[questionIndex] === quiz[questionIndex].answers.findIndex(answer => answer.isCorrect)
-                ? 'rgba(0, 200, 83, 0.1)' // Vibrant green background for correct answers
-                : 'rgba(255, 64, 129, 0.1)' // Vibrant red background for wrong answers
-          }}
-          >
-            <Typography variant="body1" gutterBottom>
-              Otázka {questionIndex + 1}: {question.answers.find((answer, index) => index === selectedAnswers[questionIndex]).answer}
-            </Typography>
-          </Paper>
+    {showResults && (
+      <div>
+        <Typography variant="h6" gutterBottom style={{ textAlign: 'center', marginBottom: '16px' }}>
+          Tvoje Skóre: {points} z {quiz.length}
+        </Typography>
+        <Typography variant="body1" gutterBottom style={{ textAlign: 'center', marginBottom: '16px' }}>
+          Správne odpovede:
+        </Typography>
+        <Grid container justifyContent="center" spacing={2}>
+          {quiz.map((question, questionIndex) => (
+            <Grid item xs={12} key={questionIndex}>
+              <Paper
+                elevation={3}
+                style={{
+                  padding: '16px',
+                  backgroundColor:
+                    selectedAnswers[questionIndex] === quiz[questionIndex].answers.findIndex(answer => answer.isCorrect)
+                    ? 'rgba(0, 200, 83, 0.1)' // Vibrant green background for correct answers
+                    : 'rgba(255, 64, 129, 0.1)' // Vibrant red background for wrong answers
+              }}
+              >
+                <Typography variant="body1" gutterBottom>
+                  Otázka {questionIndex + 1}: {question.answers.find((answer, index) => index === selectedAnswers[questionIndex]).answer}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
         </Grid>
-      ))}
-    </Grid>
-  </div>
-)}
-</DialogContent>
+      </div>
+    )}
+    </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleCloseQuiz} color="error">
-            zruš
-          </Button>
-          <Button onClick={handleSubmitQuiz} color="primary" variant="contained">
-            odovzdaj
-          </Button>
-        </DialogActions>
-      </Dialog>
-  </div>
+            <DialogActions>
+              <Button onClick={handleCloseQuiz} color="error">
+                zruš
+              </Button>
+              <Button onClick={handleSubmitQuiz} color="primary" variant="contained">
+                odovzdaj
+              </Button>
+            </DialogActions>
+        </Dialog>
+
+      
+       
+    </div>
+    
 );
 }
 export default QuizForm;

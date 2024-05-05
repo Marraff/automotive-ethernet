@@ -1,18 +1,13 @@
-import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Container from 'react-bootstrap/Container';
 import React from 'react'; 
 import { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/material/Button';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
-//import './VideoList.css'; 
+import wallpaper from '../images/background_main.jpg';
+
+import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snackbar, AppBar, Toolbar } from '@mui/material';
+//import { Link } from 'react-router-dom';
 
 function GridExample() {
 
@@ -23,8 +18,9 @@ function GridExample() {
     const videoContainerStyle = {
         //border: '1px solid #ccc',
         //borderRadius: '5px',
-        padding: '10px',
+        //padding: '10px',
         marginBottom: '20px',
+        backgroundColor: '#1976d2',
       };
       
     const videoStyle = {
@@ -38,6 +34,8 @@ function GridExample() {
         marginTop: '10px',
         fontWeight: 'bold',
         textAlign: 'center', // Center text horizontally
+        color: 'white',
+        fontSize: '20px',
       };
 
     const handleClick = () => {
@@ -70,16 +68,27 @@ function GridExample() {
     return (
     
     <div>
+        <div style={{ 
+      backgroundImage: `url(${wallpaper})`, 
+      backgroundSize: 'cover', 
+      backgroundRepeat: 'repeat-y',
+      backgroundPosition: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+         
+        }}>
 
-        <Navbar expand="lg" className="bg-body-tertiary">
-        <Container fluid>
-            <Navbar.Brand href="#" style={{'font-weight': 'bold'}}>Videá</Navbar.Brand>
-        </Container>
-        </Navbar>
-
-       
+        <AppBar position="static" elevation={0}>
+                <Toolbar>
+                    <Typography variant="h6"  style={{ flex: 1, fontWeight: 'bold', textDecoration: 'none', color: 'inherit' }} >
+                        Videá
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+      
 
         <Row md={2} className="g-4" style={{ alignItems: 'stretch', padding: '7% 10%' }}>
+        
             {videos.map(video => (
             <Col key={video.id}>
                 <div style={videoContainerStyle}>
@@ -95,28 +104,84 @@ function GridExample() {
                 </div>
             </Col>
             ))}
+           
       </Row>
+    </div>
 
     </div>
   );
 }
 
 export default GridExample;
-
 /*
- <Row  md={2} className="g-4" style={{'align-items': 'stretch', padding: '7% 10%' }}>
-        {videos.map((video) => (
-        <div key={video.id} className="video-container">
-           <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${video.ytb_id}`}
-            title={video.name}
-            allowFullScreen
-          ></iframe>
-          <h3>{video.name}</h3>
-        </div>
-      ))}
-        </Row>
+import React, { useEffect, useState } from 'react';
+import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snackbar } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import axios from 'axios';
 
+function GridExample() {
+    const [videos, setVideos] = useState([]);
+    const { enqueueSnackbar } = useSnackbar();
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    useEffect(() => {
+        async function getVideos() {
+            try {
+                const resp = await axios.get('http://localhost:80/api/video.php');
+                const jsonD = resp.data.split('"videos":')[1];
+                const str = jsonD.substring(0, jsonD.length - 1);
+                const dataArray = JSON.parse(str);
+                setVideos(dataArray);
+            } catch (error) {
+                enqueueSnackbar(`$'error' ${error.message}`, { variant: 'error' });
+                handleClick();
+            }
+        }
+        getVideos();
+    }, [enqueueSnackbar]);
+
+    const videoContainerStyle = {
+      padding: '10px',
+      marginBottom: '20px',
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+       // borderRadius: '10px',
+    };
+
+    const videoNameStyle = {
+        marginTop: '10px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    };
+
+    return (
+        <Container>
+            <Grid container spacing={4} justifyContent="center" style={{ marginTop: '20px' }}>
+                {videos.map((video) => (
+                    <Grid key={video.id} item xs={12} sm={6} md={4} lg={3}>
+                        <Card elevation={3} style={videoContainerStyle}>
+                            <CardMedia
+                                component="iframe"
+                                src={`https://www.youtube.com/embed/${video.ytb_id}`}
+                                title={video.name}
+                                allowFullScreen
+                                style={{ height: '315px' }}
+                            />
+                            <CardContent>
+                                <Typography variant="h6" style={videoNameStyle}>
+                                    {video.name}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
+    );
+}
+
+export default GridExample;
 */

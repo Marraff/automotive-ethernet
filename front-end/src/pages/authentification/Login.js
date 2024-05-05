@@ -20,6 +20,7 @@ import MuiAlert from '@mui/material/Alert';
 import Navbar from '../../components/Navigationbar';
 import axios from 'axios';
 import AppService from '../../services/AppService';
+import wallpaper from '../../images/background_main.jpg';
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -140,7 +141,18 @@ const Login = () => {
 
 	return (
 		<>
+
 			<Navbar />
+			<div style={{ 
+     backgroundImage: `url(${wallpaper})`, 
+     backgroundSize: 'cover', 
+     backgroundRepeat: 'no-repeat',
+     backgroundPosition: 'center',
+     height: '100vh',
+     display: 'flex',
+     flexDirection: 'column',
+         
+        }}>
 			{loading ? (
 				<>
 					<HashLoader color="#1d67d5" size={100} style={{ position: 'absolute', top: '40%', left: '50%' }} />
@@ -215,7 +227,9 @@ const Login = () => {
 					{status}
 				</Alert>
 			</Snackbar>
+			</div>
 		</>
+
 	);
 };
 

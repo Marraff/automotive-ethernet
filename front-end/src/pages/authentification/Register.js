@@ -26,6 +26,8 @@ import AppService from '../../services/AppService';
 import { useSnackbar } from 'notistack';
 import CryptoJS from 'crypto-js';
 
+import wallpaper from '../../images/background_main.jpg';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -140,6 +142,16 @@ const Register = () => {
 
 	return (
 		<>
+		<div style={{ 
+     backgroundImage: `url(${wallpaper})`, 
+     backgroundSize: 'cover', 
+     backgroundRepeat: 'no-repeat',
+     backgroundPosition: 'center',
+     height: '100vh',
+     display: 'flex',
+     flexDirection: 'column',
+         
+        }}>
 			<Navbar />
 			{loading ? (
 				<>
@@ -248,6 +260,7 @@ const Register = () => {
 					{status}
 				</Alert>
 			</Snackbar>
+			</div>
 		</>
 	);
 };
