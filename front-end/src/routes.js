@@ -16,6 +16,7 @@ const AuthGuard = Loadable(lazy(() => import('./components/guards/AuthGuard')));
 
 const DashBoard = Loadable(lazy(() => import('./pages/dashboard/DashBoard')));
 const DashBoardLoggedIn = Loadable(lazy(() => import('./pages/dashboard/DashBoardLoggedIn')));
+const TestPage = Loadable(lazy(() => import('./pages/dashboard/TestPage')));
 const Admin = Loadable(lazy(() => import('./pages/dashboard/Admin')));
 const DashboardLayout = Loadable(lazy(() => import('./components/DashboardLayout')));
 
@@ -62,6 +63,14 @@ const routes = [
 		element: (
 			//<AuthGuard>
 				<Admin />
+			//</AuthGuard>
+		)
+	},
+	{
+		path: '/Tests',
+		element: (
+			//<AuthGuard>
+				<TestPage />
 			//</AuthGuard>
 		)
 	}

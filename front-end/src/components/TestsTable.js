@@ -79,7 +79,7 @@ function QuizForm() {
         }        
     }
     delArticle(id);
-};
+  };
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { question: '', answers: [{ answer: '', isCorrect: false }] }]);

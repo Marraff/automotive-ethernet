@@ -24,6 +24,17 @@ function NavScrollExample() {
     setOpen(true);
     };
 
+  const handleUser = () =>{
+    if(window.localStorage.user){
+
+      navigate('/Admin',{ state: { registered: true, token: window.localStorage.accessToken } })
+    }
+    else{
+      
+      navigate('/DashBoardLoggedIn',{ state: { registered: true, token: window.localStorage.accessToken } })
+    }
+  }
+
   const loggout = () => {
 
     AppService.clearToken();
@@ -37,72 +48,63 @@ function NavScrollExample() {
     useEffect(() => {
         
         if (!location.state || !location.state.token) {
+        
           navigate('/');
         }
 
-        else{
+        //else{
+        if (window.localStorage.accessToken){
           setTimeout(()=>{
+            
               if(location.state && location.state.token){
 
                 const axiosInstance = axios.create({
                   baseURL: "http://localhost:80/api",
                   timeout: 3000,
                   headers: {Authorization: `bearer ${location.state.token}`}
+                
                 })
+                
                 async function validateToken(){
                   try{
                       
                       const resp = await axiosInstance.post('/validate.php');
 
+                      
                       if (resp.data != 1){
                           navigate('/');
                       }
                      
-                      if(!window.localStorage.user){
+                      /*if(!window.localStorage.user){
+                        console.log("nieccoo")
                         navigate('/DashBoardLoggedIn', { state: { registered: true, token: window.localStorage.accessToken } });
-                        }
+
+                      }*/
+                      
+                      
                       
                   }catch(error){
                       setStatus(`$'error' ${error.message}`);
                       handleClick();
                   }        
               }
-                  /*async function validateToken(){
-                      try{
-                          
-                          const resp = await axiosInstance.post('/validate.php');
+              validateToken();
 
-                          if (resp.data != 1){
-                              navigate('/');
-                          }
-                         
-                          if(window.localStorage.user){
-                            //navigate('/Admin', { state: { registered: true, token: window.localStorage.accessToken } });
-                          }
-                          else{
-                            navigate('/DashBoardLoggedIn', { state: { registered: true, token: window.localStorage.accessToken } });
-                            navigate('/DashBoardLoggedIn');
-                          }
-                          
-                      }catch(error){
-                          setStatus(`$'error' ${error.message}`);
-                          handleClick();
-                      }        
-                  }*/
-                  validateToken();
               }
+              
               else{
                   navigate('/');
               }
           },1000)
       }
     }, [location.state,navigate,setStatus,handleClick]);
+    //}, [navigate,setStatus,handleClick]);
 
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand  style={{'font-weight': 'bold'}} >Automotive Ethernet</Navbar.Brand>
+        <Navbar.Brand  style={{'font-weight': 'bold'}} onClick={handleUser}>Automotive Ethernet</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -127,6 +129,10 @@ function NavScrollExample() {
               <NavDropdown.Item href="#video">Video 3</NavDropdown.Item>
                 
             </NavDropdown>
+
+            <NavDropdown title="Otestuj sa" id="test" onClick={() => navigate('/Tests',{ state: { registered: true, token: window.localStorage.accessToken } })} ></NavDropdown>
+
+            
            
           </Nav>
 
