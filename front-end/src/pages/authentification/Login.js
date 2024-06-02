@@ -20,7 +20,7 @@ import MuiAlert from '@mui/material/Alert';
 import Navbar from '../../components/Navigationbar';
 import axios from 'axios';
 import AppService from '../../services/AppService';
-import wallpaper from '../../images/background_main.jpg';
+import wallpaper from '../../images/math_custom-low.png';
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {

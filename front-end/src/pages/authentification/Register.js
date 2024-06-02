@@ -25,8 +25,7 @@ import { useEffect } from 'react';
 import AppService from '../../services/AppService';
 import { useSnackbar } from 'notistack';
 import CryptoJS from 'crypto-js';
-
-import wallpaper from '../../images/background_main.jpg';
+import wallpaper from '../../images/math_custom-low.png';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

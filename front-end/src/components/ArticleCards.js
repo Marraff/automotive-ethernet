@@ -12,7 +12,7 @@ import React from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snackbar, AppBar, Toolbar } from '@mui/material';
 //import { Link } from 'react-router-dom';
 
-import wallpaper from '../images/background_main.jpg';
+import wallpaper from '../images/math_custom-low.png';
 import Link from '@mui/material/Link'
 
 function GridExample() {

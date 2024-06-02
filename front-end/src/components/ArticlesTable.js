@@ -40,8 +40,8 @@ function ArticlesTable() {
             sortable: true
         },
         {
-          name: 'Zmaž',
-          cell: row => <Button 
+            name: 'Zmaž',
+            cell: row => <Button 
                             type="contained"           
                             variant="contained" 
                             sx={{ mt: 3, mb: 2 }} 

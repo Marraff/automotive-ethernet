@@ -4,7 +4,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
-import wallpaper from '../images/background_main.jpg';
+import wallpaper from '../images/math_custom-low.png';
 
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snackbar, AppBar, Toolbar } from '@mui/material';
 //import { Link } from 'react-router-dom';
