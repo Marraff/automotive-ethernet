@@ -24,6 +24,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import wallpaper from '../images/math_custom-low.png';
 
+import baseURL from '../lib/URL';
+
 
 
 function ArticlesTable() {
@@ -86,9 +88,11 @@ function ArticlesTable() {
         async function delArticle(id){
             try{
                 
-                const resp = await axios.delete('http://localhost:80/api/article.php', { data: {id}});
+                //const resp = await axios.delete('http://localhost:80/api/article.php', { data: {id}});
+                const resp = await axios.delete(`${baseURL}/api/article.php`, { data: {id}});
 
-                const respNew = await axios.get('http://localhost:80/api/article.php');
+                //const respNew = await axios.get('http://localhost:80/api/article.php');
+                const respNew = await axios.get(`${baseURL}/api/article.php`);
                 
                 const jsonD = respNew.data.split('"articles":')[1];
                 const str = jsonD.substring(0, jsonD.length - 1);
@@ -116,9 +120,11 @@ function ArticlesTable() {
                 formData.append('pdfFile', file);
                 formData.append('photo', photo);
 
-                const resp = await axios.post('http://localhost:80/api/article.php', formData);
+                //const resp = await axios.post('http://localhost:80/api/article.php', formData);
+                const resp = await axios.post(`${baseURL}/api/article.php`, formData);
                 
-                const newData = await axios.get('http://localhost:80/api/article.php');
+                //const newData = await axios.get('http://localhost:80/api/article.php');
+                const newData = await axios.get(`${baseURL}/api/article.php`);
                 //console.log(newData);
                 if (resp.status == 200){
                     
@@ -175,7 +181,8 @@ function ArticlesTable() {
         async function getArticles(){
             try{
                 
-                const resp = await axios.get('http://localhost:80/api/article.php');
+                //const resp = await axios.get('http://localhost:80/api/article.php');
+                const resp = await axios.get(`${baseURL}/api/article.php`);
                 
                 //console.log(resp);
                 const jsonD = resp.data.split('"articles":')[1]

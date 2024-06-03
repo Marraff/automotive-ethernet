@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { AccountCircle } from '@mui/icons-material';
 import { Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemText } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import baseURL from '../lib/URL';
 
 
 function NavScrollExample() {
@@ -100,7 +101,7 @@ function NavScrollExample() {
 			//setTimeout(()=>{
 				
 					const axiosInstance = axios.create({
-					baseURL: "http://localhost:80/api",
+					baseURL: `${baseURL}/api`,
 					timeout: 3000,
 					headers: {Authorization: `bearer ${window.localStorage.accessToken}`}
 					})
@@ -136,7 +137,9 @@ function NavScrollExample() {
 			async function getArticles(){
 				try {
   
-				  const response = await axios.get('http://localhost:80/api/article_content.php');
+				  //const response = await axios.get('http://localhost:80/api/article_content.php');
+				  const response = await axios.get(`${baseURL}/api/article_content.php`);
+
 				  const jsonD = response.data.split('[{')[1];
 				  const str = "[{"+jsonD;
 				  const dataArray = JSON.parse(str);
@@ -152,7 +155,8 @@ function NavScrollExample() {
 			async function getVideos(){
 			  try{
 				  
-				  const resp = await axios.get('http://localhost:80/api/video.php');
+				  //const resp = await axios.get('http://localhost:80/api/video.php');
+				  const resp = await axios.get(`${baseURL}/api/video.php`);
 				  
 				  const jsonD = resp.data.split('"videos":')[1]
 				  const str = jsonD.substring(0, jsonD.length - 1);

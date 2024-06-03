@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import wallpaper from '../images/math_custom-low.png';
-
+import baseURL from '../lib/URL';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snackbar, AppBar, Toolbar } from '@mui/material';
 //import { Link } from 'react-router-dom';
 
@@ -47,7 +47,8 @@ function GridExample() {
         async function getVideos(){
             try{
                 
-                const resp = await axios.get('http://localhost:80/api/video.php');
+                //const resp = await axios.get('http://localhost:80/api/video.php');
+                const resp = await axios.get(`${baseURL}/api/video.php`);
                 
                 const jsonD = resp.data.split('"videos":')[1]
                 const str = jsonD.substring(0, jsonD.length - 1);

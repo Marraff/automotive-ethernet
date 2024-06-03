@@ -26,6 +26,7 @@ import AppService from '../../services/AppService';
 import { useSnackbar } from 'notistack';
 import CryptoJS from 'crypto-js';
 import wallpaper from '../../images/math_custom-low.png';
+import baseURL from '../../lib/URL';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -56,7 +57,8 @@ const Register = () => {
 			setTimeout(()=>{
 				
 				  const axiosInstance = axios.create({
-					baseURL: "http://localhost:80/api",
+					//baseURL: "http://localhost:80/api",
+					baseURL: `${baseURL}/api`,
 					timeout: 3000,
 					headers: {Authorization: `bearer ${window.localStorage.accessToken}`}
 				  })
@@ -107,7 +109,8 @@ const Register = () => {
 		
 		try {
 			
-			const resp = await axios.post('http://localhost:80/api/register.php',values);
+			//const resp = await axios.post('http://localhost:80/api/register.php',values);
+			const resp = await axios.post(`${baseURL}/api/register.php`,values);
 			const errorMessage = resp.data.split('\n')[2];
 			
 			if (errorMessage != ""){

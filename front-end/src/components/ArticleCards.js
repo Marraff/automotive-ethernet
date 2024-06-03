@@ -14,6 +14,7 @@ import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Snac
 
 import wallpaper from '../images/math_custom-low.png';
 import Link from '@mui/material/Link'
+import baseURL from '../lib/URL';
 
 function GridExample() {
 
@@ -65,7 +66,9 @@ function GridExample() {
            
             try {
 
-                const response = await axios.get('http://localhost:80/api/article_content.php');
+                //const response = await axios.get('http://localhost:80/api/article_content.php');
+                const response = await axios.get(`${baseURL}/api/article_content.php`);
+
                 //console.log(response.data);
                 const jsonD = response.data.split('[{')[1]
                 //console.log(jsonD);

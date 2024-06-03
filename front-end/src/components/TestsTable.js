@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import DataTable from 'react-data-table-component';
 import { useEffect } from 'react';
-
+import baseURL from '../lib/URL';
 import wallpaper from '../images/math_custom-low.png';
 
 function QuizForm() {
@@ -64,10 +64,11 @@ function QuizForm() {
     async function delArticle(id){
         try{
             
-            const resp = await axios.delete('http://localhost:80/api/test.php', { data: {id}});
+            //const resp = await axios.delete('http://localhost:80/api/test.php', { data: {id}});
+            const resp = await axios.delete(`${baseURL}/api/test.php`, { data: {id}});
+            //const respNew = await axios.get('http://localhost:80/api/test.php');
+            const respNew = await axios.get(`${baseURL}/api/test.php`);
 
-            const respNew = await axios.get('http://localhost:80/api/test.php');
-            
             const jsonD = respNew.data.split('"tests":')[1];
             const str = jsonD.substring(0, jsonD.length - 1);
             const dataArray = JSON.parse(str);
@@ -137,9 +138,11 @@ function QuizForm() {
       try{
           //console.log(data);
 
-          const resp = await axios.post('http://localhost:80/api/test.php', { name: name, test: questions});
+          //const resp = await axios.post('http://localhost:80/api/test.php', { name: name, test: questions});
+          const resp = await axios.post(`${baseURL}/api/test.php`, { name: name, test: questions});
           console.log(resp);
-          const newData = await axios.get('http://localhost:80/api/test.php');
+          //const newData = await axios.get('http://localhost:80/api/test.php');
+          const newData = await axios.get(`${baseURL}/api/test.php`);
           //console.log(newData);
           if (resp.status == 200){
               
@@ -169,7 +172,8 @@ function QuizForm() {
     async function getArticles(){
         try{
             
-            const resp = await axios.get('http://localhost:80/api/test.php');
+            //const resp = await axios.get('http://localhost:80/api/test.php');
+            const resp = await axios.get(`${baseURL}/api/test.php`);
             
             console.log(resp);
             const jsonD = resp.data.split('"tests":')[1]

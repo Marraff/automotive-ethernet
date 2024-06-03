@@ -20,7 +20,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import baseURL from '../lib/URL';
 import wallpaper from '../images/math_custom-low.png';
 
 function VideosTable() {
@@ -61,7 +61,8 @@ function VideosTable() {
         async function delVideo(id){
             try{
                 console.log(id);
-                const resp = await axios.delete('http://localhost:80/api/video.php', { data: {id}});
+                //const resp = await axios.delete('http://localhost:80/api/video.php', { data: {id}});
+                const resp = await axios.delete(`${baseURL}/api/video.php`, { data: {id}});
 
                 const updatedData = videos.filter(item => item.id !== id);
                 setVideos(updatedData);
@@ -82,10 +83,11 @@ function VideosTable() {
         async function addVideo(data){
             try{
                 console.log(data);
-                const resp = await axios.post('http://localhost:80/api/video.php', data);
-                
-                const newData = await axios.get('http://localhost:80/api/video.php');
-                
+                //const resp = await axios.post('http://localhost:80/api/video.php', data);
+                const resp = await axios.post(`${baseURL}/api/video.php`, data);
+                //const newData = await axios.get('http://localhost:80/api/video.php');
+                const newData = await axios.get(`${baseURL}/api/video.php`);
+
                 const jsonD = newData.data.split('"videos":')[1]
                 const str = jsonD.substring(0, jsonD.length - 1);
                 const dataArray = JSON.parse(str);
@@ -117,8 +119,9 @@ function VideosTable() {
         async function getVideos(){
             try{
                 
-                const resp = await axios.get('http://localhost:80/api/video.php');
-                
+                //const resp = await axios.get('http://localhost:80/api/video.php');
+                const resp = await axios.get(`${baseURL}/api/video.php`);
+
                 const jsonD = resp.data.split('"videos":')[1]
                 const str = jsonD.substring(0, jsonD.length - 1);
                 const dataArray = JSON.parse(str);

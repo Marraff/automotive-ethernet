@@ -21,7 +21,7 @@ import Navbar from '../../components/Navigationbar';
 import axios from 'axios';
 import AppService from '../../services/AppService';
 import wallpaper from '../../images/math_custom-low.png';
-
+import baseURL from '../../lib/URL';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -57,7 +57,8 @@ const Login = () => {
 			setTimeout(()=>{
 				
 				  const axiosInstance = axios.create({
-					baseURL: "http://localhost:80/api",
+					//baseURL: "http://localhost:80/api",
+					baseURL: `${baseURL}/api`,
 					timeout: 3000,
 					headers: {Authorization: `bearer ${window.localStorage.accessToken}`}
 				  })
@@ -95,7 +96,8 @@ const Login = () => {
 		try {
 
 			//await login(values.email, values.password);
-			const resp = await axios.post('http://localhost:80/api/login.php', values);
+			//const resp = await axios.post('http://localhost:80/api/login.php', values);
+			const resp = await axios.post(`${baseURL}/api/login.php`, values);
 			const errorMessage = resp.data.split('\n')[2];
 
 			if (resp.status == 201){

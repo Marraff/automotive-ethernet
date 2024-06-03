@@ -22,6 +22,8 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import math_wallpaper from '../../images/math_wallpaper2.jpg';
+import baseURL from '../../lib/URL.js';
+
 
 function QuizForm() {
 
@@ -144,8 +146,9 @@ function QuizForm() {
     async function getArticles(){
         try{
             
-            const resp = await axios.get('http://localhost:80/api/test.php');
-            
+            //const resp = await axios.get('http://localhost:80/api/test.php');
+            const resp = await axios.get(`${baseURL}/api/test.php`);
+
             const jsonD = resp.data.split('"tests":')[1]
             const str = jsonD.substring(0, jsonD.length - 1);
             const dataArray = JSON.parse(str);
